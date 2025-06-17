@@ -18,7 +18,7 @@ const SignIn = () => {
       const result = await signInUser(email, password);
 
       if (result.success) {
-        navigate("/success");
+        navigate("/dashboard");
       } else {
         setError("Invalid Credentials. Try Signing Up.");
       }

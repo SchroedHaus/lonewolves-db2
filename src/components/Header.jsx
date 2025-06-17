@@ -12,7 +12,6 @@ const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
-  
 
   useEffect(() => {
     const fetchFirstName = async () => {

@@ -81,14 +81,21 @@ const Profile = () => {
     if (error) {
       setError("Error updating profile: " + error.message);
     } else {
+      await updateUserCategories(profile.id, selectedCategoryIds);
+
+      const updatedCategoryNames = allCategories
+        .filter((cat) => selectedCategoryIds.includes(cat.id))
+        .map((cat) => cat.name)
+        .join(", ");
+
+      setSelectedCategories(updatedCategoryNames);
+
       setSuccessMessage("Profile updated successfully");
       setEditMode(false);
       setTimeout(() => {
         setSuccessMessage("");
       }, 3000);
     }
-
-    await updateUserCategories(profile.id, selectedCategoryIds);
 
     setLoading(false);
   };
@@ -134,17 +141,17 @@ const Profile = () => {
             <strong>Categories: </strong>
             {selectedCategories}
           </div>
-          {(session?.user?.id === profile.id || isAdmin) &&
-          <>
-          <Button onClick={() => setEditMode(true)}>Edit Profile</Button>
-            <Button onClick={() => deleteProfile(session)} className="bg-red-600 text-white">
-  Delete Profile
-</Button>
-            
-          </>
-            
-
-          }
+          {(session?.user?.id === profile.id || isAdmin) && (
+            <>
+              <Button onClick={() => setEditMode(true)}>Edit Profile</Button>
+              <Button
+                onClick={() => deleteProfile(session)}
+                className="bg-red-600 text-white"
+              >
+                Delete Profile
+              </Button>
+            </>
+          )}
 
           {successMessage && (
             <p className="text-green-600 mt-2">{successMessage}</p>
@@ -185,7 +192,7 @@ const Profile = () => {
               <input
                 type="text"
                 name="email"
-                value={session?.user?.email}
+                value={profile.email}
                 placeholder="Your email"
                 disabled
                 className="border w-full p-2 rounded-sm bg-gray-100"

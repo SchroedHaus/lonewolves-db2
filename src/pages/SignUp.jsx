@@ -38,7 +38,7 @@ const SignUp = () => {
 
             if (result.success) {
                 setSuccess(true);
-                navigate("/success");
+                navigate("/profile");
             }
         } catch (error) {
             setError("an error occurred");

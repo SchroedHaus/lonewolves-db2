@@ -12,7 +12,6 @@ const Dashboard = () => {
 
   useEffect(() => {
     const fetchProfiles = async () => {
-      if (!session) return;
 
       // Fetch all categories for the filter dropdown
       const { data: categoriesData } = await supabase
